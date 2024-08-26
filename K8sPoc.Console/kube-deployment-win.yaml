@@ -1,23 +1,35 @@
-# kubectl apply -f kube-pod-win.yaml
-# kubectl logs k8spoc-console-win-pod --follow
+# kubectl apply -f kube-deployment-win.yaml
+# kubectl get pods
+# kubectl logs <pod-name> --follow
+# kubectl delete deployment k8spoc-console-win
 
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: k8spoc-console-win-pod
+  name: k8spoc-console-win
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/os 
-            operator: In
-            values:
-            - windows
-  containers:
-    - name: k8spoc-console-win
-      image: acrawdemo.azurecr.io/k8spoc-console-win:latest
-      imagePullPolicy: IfNotPresent
-  imagePullSecrets:
-    - name: aw-acr-demo-secret
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8spoc-console-win
+  template:
+    metadata:
+      labels:
+        app: k8spoc-console-win
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          #  Target Windows nodes.
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os 
+                operator: In
+                values:
+                - windows
+      containers:
+      - name: k8spoc-console
+        image: acrawdemo.azurecr.io/k8spoc-console-win:latest
+        imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: aw-acr-demo-secret

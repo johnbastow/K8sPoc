@@ -1,5 +1,5 @@
-# kubectl apply -f kube-pod.yaml
-# kubectl logs k8spoc-console --follow
+# kubectl apply -f kube-deployment.yaml
+# kubectl logs k8spoc-webapi --follow
 # netsh interface portproxy add v4tov4 listenport=32262 listenaddress=192.168.137.90 connectport=32262 connectaddress=192.168.0.2
 # netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=192.168.137.90 
 # Get-AksEdgeNodeAddr -NodeType Linux
@@ -20,6 +20,15 @@ spec:
       labels:
         app: k8spoc-webapi
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os 
+                operator: In
+                values:
+                - linux
       containers:
       - name: k8spoc-webapi
         image: acrawdemo.azurecr.io/k8spoc-webapi:latest
