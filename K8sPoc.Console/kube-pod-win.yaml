@@ -1,0 +1,23 @@
+# kubectl apply -f kube-pod-win.yaml
+# kubectl logs k8spoc-console-win-pod --follow
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: k8spoc-console-win-pod
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/os 
+            operator: In
+            values:
+            - windows
+  containers:
+    - name: k8spoc-console-win
+      image: acrawdemo.azurecr.io/k8spoc-console-win:latest
+      imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: aw-acr-demo-secret
