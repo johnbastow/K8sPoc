@@ -1,14 +1,34 @@
 # kubectl apply -f kube-pod.yaml
-# kubectl logs k8spoc-console-pod --follow
+# kubectl get pods
+# kubectl logs <pod-name> --follow
+# kubectl delete deployment k8spoc-console
 
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: k8spoc-console-pod
+  name: k8spoc-console
 spec:
-  containers:
-    - name: k8spoc-console
-      image: acrawdemo.azurecr.io/k8spoc-console:latest
-      imagePullPolicy: IfNotPresent
-  imagePullSecrets:
-    - name: aw-acr-demo-secret
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8spoc-console
+  template:
+    metadata:
+      labels:
+        app: k8spoc-console
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os 
+                operator: In
+                values:
+                - linux
+      containers:
+      - name: k8spoc-console
+        image: acrawdemo.azurecr.io/k8spoc-console:latest
+        imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: aw-acr-demo-secret
