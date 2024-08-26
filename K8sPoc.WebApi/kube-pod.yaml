@@ -1,0 +1,41 @@
+# kubectl apply -f kube-pod.yaml
+# kubectl logs k8spoc-console --follow
+# netsh interface portproxy add v4tov4 listenport=32262 listenaddress=192.168.137.90 connectport=32262 connectaddress=192.168.0.2
+# netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=192.168.137.90 
+# Get-AksEdgeNodeAddr -NodeType Linux
+# Get-AksEdgeNodeAddr -NodeType Windows
+# New-NetFirewallRule -DisplayName "inbound-aks-web-port" -Direction Inbound -LocalPort 32262 -Protocol TCP -Action Allow
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8spoc-webapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8spoc-webapi
+  template:
+    metadata:
+      labels:
+        app: k8spoc-webapi
+    spec:
+      containers:
+      - name: k8spoc-webapi
+        image: acrawdemo.azurecr.io/k8spoc-webapi:latest
+        imagePullPolicy: IfNotPresent
+      imagePullSecrets:
+        - name: aw-acr-demo-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8spoc-webapi
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: k8spoc-webapi    

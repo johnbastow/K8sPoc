@@ -1,0 +1,21 @@
+# docker build . --file Dockerfile.Windows -t acrawdemo.azurecr.io/container-console-win
+# docker push acrawdemo.azurecr.io/container-console-win
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022 AS build-env
+WORKDIR /App
+#USER NT Authority\System
+USER ContainerAdministrator
+
+# Copy everything
+COPY . ./
+# Restore as distinct layers
+RUN dotnet restore
+# Build and publish a release
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-ltsc2022
+WORKDIR /App
+USER ContainerUser
+COPY --from=build-env /App/out .
+ENTRYPOINT ["dotnet", "ContainerConsole.dll"]
