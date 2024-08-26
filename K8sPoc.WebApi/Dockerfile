@@ -1,6 +1,6 @@
-# docker build . -t acrawdemo.azurecr.io/container-webapi
-# docker run -ti --rm -p 8080:8080 acrawdemo.azurecr.io/container-webapi
-# docker push acrawdemo.azurecr.io/container-webapi
+# docker build . -t acrawdemo.azurecr.io/k8spoc-webapi
+# docker run -ti --rm -p 8080:8080 acrawdemo.azurecr.io/k8spoc-webapi
+# docker push acrawdemo.azurecr.io/k8spoc-webapi
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /App
@@ -16,5 +16,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /App
 COPY --from=build-env /App/out .
-EXPOSE 80
-ENTRYPOINT ["dotnet", "ContainerWebApi.dll"]
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "K8sPoc.WebApi.dll"]

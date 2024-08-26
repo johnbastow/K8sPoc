@@ -1,6 +1,6 @@
 @ContainerWebApi_HostAddress = http://localhost:5175
 
-GET {{ContainerWebApi_HostAddress}}/weatherforecast/
+GET {{ContainerWebApi_HostAddress}}/helloapi/
 Accept: application/json
 
 ###
