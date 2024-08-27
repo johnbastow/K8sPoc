@@ -1,9 +1,15 @@
 # kubectl apply -f kube-deployment.yaml
-# kubectl logs k8spoc-webapi --follow
-# netsh interface portproxy add v4tov4 listenport=32262 listenaddress=192.168.137.90 connectport=32262 connectaddress=192.168.0.2
-# netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=192.168.137.90 
+# kubectl logs k8spoc-webapi-<podid> --follow
+#
+# Get the service port
+# kubectl get service
+#
+# Get the node IP addresses
 # Get-AksEdgeNodeAddr -NodeType Linux
 # Get-AksEdgeNodeAddr -NodeType Windows
+#
+# netsh interface portproxy add v4tov4 listenport=32262 listenaddress=192.168.137.90 connectport=32262 connectaddress=192.168.0.2
+# netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=192.168.137.90 
 # New-NetFirewallRule -DisplayName "inbound-aks-web-port" -Direction Inbound -LocalPort 32262 -Protocol TCP -Action Allow
 ---
 apiVersion: apps/v1
