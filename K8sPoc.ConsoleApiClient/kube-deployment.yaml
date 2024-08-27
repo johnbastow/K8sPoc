@@ -1,0 +1,37 @@
+# kubectl apply -f kube-deployment.yaml
+# kubectl get pods
+# kubectl logs <pod-name> --follow
+# kubectl delete deployment k8spoc-consoleapiclient
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8spoc-consoleapiclient
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8spoc-consoleapiclient
+  template:
+    metadata:
+      labels:
+        app: k8spoc-consoleapiclient
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os 
+                operator: In
+                values:
+                - linux
+      containers:
+      - name: k8spoc-consoleapiclient
+        image: acrawdemo.azurecr.io/k8spoc-consoleapiclient:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: WEB_API_HOST
+          value: k8spoc-webapi:8080
+      imagePullSecrets:
+      - name: aw-acr-demo-secret
