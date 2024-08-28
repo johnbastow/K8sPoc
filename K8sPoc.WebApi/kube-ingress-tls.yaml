@@ -27,7 +27,7 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-      - kbastow-2022.demo.local:8443
+      - kbastow-2022.demo.local
     secretName: kbastow-local-cert
   rules:
   - host: kbastow-2022.demo.local

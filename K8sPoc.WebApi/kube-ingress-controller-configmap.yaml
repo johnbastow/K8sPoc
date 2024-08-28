@@ -1,9 +1,17 @@
 # kubectl apply -f kube-ingress-controller-configmap.yaml
+# helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
 
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: ingress-nginx-nginx-ingress-controller
+  name: ingress-nginx-controller
   namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 data:
+  #  Disable hsts (Don't do this in production!)
   hsts: "false"
+
+  #  Disable https redirect since it redirects to the standard 443 port not 8443
+  ssl-redirect: "false"

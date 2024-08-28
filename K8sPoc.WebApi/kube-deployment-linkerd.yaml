@@ -26,6 +26,9 @@ spec:
       app: k8spoc-webapi
   template:
     metadata:
+      # Enables Linkerd injection
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: k8spoc-webapi
     spec:

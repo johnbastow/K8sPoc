@@ -1,14 +1,14 @@
-PS C:\Users\Administrator> helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace --dry-run --debug
+s-nginx --namespace ingress-nginx --create-namespace --dry-run --debug
 history.go:56: [debug] getting history for release ingress-nginx
 upgrade.go:158: [debug] preparing upgrade for ingress-nginx
 upgrade.go:166: [debug] performing update for ingress-nginx
 upgrade.go:355: [debug] dry run for ingress-nginx
 Release "ingress-nginx" has been upgraded. Happy Helming!
 NAME: ingress-nginx
-LAST DEPLOYED: Tue Aug 27 17:07:24 2024
+LAST DEPLOYED: Wed Aug 28 09:41:12 2024
 NAMESPACE: ingress-nginx
 STATUS: pending-upgrade
-REVISION: 3
+REVISION: 5
 TEST SUITE: None
 USER-SUPPLIED VALUES:
 {}
@@ -1212,145 +1212,3 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
     tls.crt: <base64 encoded cert>
     tls.key: <base64 encoded key>
   type: kubernetes.io/tls
-PS C:\Users\Administrator>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
