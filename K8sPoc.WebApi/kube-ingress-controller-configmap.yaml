@@ -1,0 +1,9 @@
+# kubectl apply -f kube-ingress-controller-configmap.yaml
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: ingress-nginx-nginx-ingress-controller
+  namespace: ingress-nginx
+data:
+  hsts: "false"
