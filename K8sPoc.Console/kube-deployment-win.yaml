@@ -30,6 +30,6 @@ spec:
       containers:
       - name: k8spoc-console
         image: acrawdemo.azurecr.io/k8spoc-console-win:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
       imagePullSecrets:
         - name: aw-acr-demo-secret

@@ -17,6 +17,7 @@ spec:
       labels:
         app: k8spoc-console
     spec:
+      # Ensure that this is only deployed to a Linux node.
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -29,6 +30,8 @@ spec:
       containers:
       - name: k8spoc-console
         image: acrawdemo.azurecr.io/k8spoc-console:latest
-        imagePullPolicy: IfNotPresent
+        # Always pulls the latest image from the registry even if cached.
+        # Only recommended to be used in POC environment where tag isn't changing.
+        imagePullPolicy: Always
       imagePullSecrets:
         - name: aw-acr-demo-secret
