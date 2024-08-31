@@ -15,6 +15,19 @@
 # netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=192.168.137.90 
 # New-NetFirewallRule -DisplayName "inbound-aks-web-port" -Direction Inbound -LocalPort 32262 -Protocol TCP -Action Allow
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8spoc-webapi
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: k8spoc-webapi    
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -47,16 +60,3 @@ spec:
         imagePullPolicy: IfNotPresent
       imagePullSecrets:
         - name: aw-acr-demo-secret
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: k8spoc-webapi
-spec:
-  type: LoadBalancer
-  ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-  selector:
-    app: k8spoc-webapi    
