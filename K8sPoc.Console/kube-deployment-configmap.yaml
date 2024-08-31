@@ -1,4 +1,4 @@
-# kubectl apply -f kube-deployment.yaml
+# kubectl apply -f kube-deployment-configmap.yaml
 # kubectl get pods
 # kubectl logs <pod-name> --follow
 # kubectl delete deployment k8spoc-console
@@ -33,10 +33,12 @@ spec:
         # Always pulls the latest image from the registry even if cached.
         # Only recommended to be used in POC environment where tag isn't changing.
         imagePullPolicy: Always
-        env:
-        - name: NON_SECRET_SETTING
-          value: "Hello from the environment"
-        - name: SECRET_SETTING
-          value: "Not so secret secret"
+        # This will map each ConfigMap value to an environment variable.
+        envFrom:
+        - configMapRef:
+            name: k8spoc-config
+            optional: true 
+        - secretRef:
+            name: k8spoc-secrets
       imagePullSecrets:
         - name: aw-acr-demo-secret

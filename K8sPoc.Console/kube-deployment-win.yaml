@@ -31,5 +31,10 @@ spec:
       - name: k8spoc-console
         image: acrawdemo.azurecr.io/k8spoc-console-win:latest
         imagePullPolicy: Always
+        env:
+        - name: NON_SECRET_SETTING
+          value: "Hello from the environment"
+        - name: SECRET_SETTING
+          value: "Not so secret secret"
       imagePullSecrets:
         - name: aw-acr-demo-secret

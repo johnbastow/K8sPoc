@@ -1,0 +1,12 @@
+# kubectl apply -f kube-configmap.yaml
+# kubectl get configmaps
+# kubectl describe configmap k8spoc-config
+# kubectl delete configmap k8spoc-config
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8spoc-config
+data:
+  NON_SECRET_SETTING: Hello from the ConfigMap
+  ANOTHER_SETTING: Whatever
