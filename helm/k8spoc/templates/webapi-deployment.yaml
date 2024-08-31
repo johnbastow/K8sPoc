@@ -1,0 +1,31 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8spoc-webapi
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8spoc-webapi
+  template:
+    metadata:
+      labels:
+        app: k8spoc-webapi
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os 
+                operator: In
+                values:
+                - linux
+      containers:
+      - name: k8spoc-webapi
+        image: acrawdemo.azurecr.io/k8spoc-webapi:latest
+        imagePullPolicy: Always
+      imagePullSecrets:
+        - name: aw-acr-demo-secret
