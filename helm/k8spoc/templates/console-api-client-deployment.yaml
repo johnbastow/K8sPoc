@@ -1,17 +1,18 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8spoc-webapi
+  name: k8spoc-consoleapiclient
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: k8spoc-webapi
+      app: k8spoc-consoleapiclient
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
-        app: k8spoc-webapi
+        app: k8spoc-consoleapiclient
     spec:
       affinity:
         nodeAffinity:
@@ -23,8 +24,12 @@ spec:
                 values:
                 - linux
       containers:
-      - name: k8spoc-webapi
-        image: acrawdemo.azurecr.io/k8spoc-webapi:latest
+      - name: k8spoc-consoleapiclient
+        image: acrawdemo.azurecr.io/k8spoc-consoleapiclient:latest
         imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: k8spoc-config
+            optional: true 
       imagePullSecrets:
-        - name: acr-docker-secret
+      - name: acr-docker-secret

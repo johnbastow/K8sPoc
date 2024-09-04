@@ -1,2 +1,7 @@
 instance: "k8spoc-default"
 phase: "dev"
+imageRegistryCredentials:
+  registry: acrawdemo.azurecr.io
+  username: someone
+  password: sillyness
+  email: someone@host.com

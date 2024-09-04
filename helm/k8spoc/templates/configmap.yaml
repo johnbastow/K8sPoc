@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8spoc-config
+data:
+  NON_SECRET_SETTING: Hello from the ConfigMap
+  ANOTHER_SETTING: Whatever
+  WEB_API_HOST: k8spoc-webapi:8080

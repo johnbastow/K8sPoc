@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8spoc-console
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8spoc-console
+  template:
+    metadata:
+      labels:
+        app: k8spoc-console
+    spec:
+      # Ensure that this is only deployed to a Linux node.
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os 
+                operator: In
+                values:
+                - linux
+      containers:
+      - name: k8spoc-console
+        image: acrawdemo.azurecr.io/k8spoc-console:latest
+        # Always pulls the latest image from the registry even if cached.
+        # Only recommended to be used in POC environment where tag isn't changing.
+        imagePullPolicy: Always
+        # This will map each ConfigMap value to an environment variable.
+        envFrom:
+        - configMapRef:
+            name: k8spoc-config
+            optional: true 
+        - secretRef:
+            name: k8spoc-secrets
+      imagePullSecrets:
+        - name: acr-docker-secret
