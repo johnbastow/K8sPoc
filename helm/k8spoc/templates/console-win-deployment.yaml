@@ -1,3 +1,4 @@
+{{- if .Values.installOptions.installWindowsConsole }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,3 +35,4 @@ spec:
             name: k8spoc-secrets
       imagePullSecrets:
         - name: acr-docker-secret
+{{ end }}

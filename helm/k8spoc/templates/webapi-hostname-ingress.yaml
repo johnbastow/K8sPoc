@@ -1,0 +1,33 @@
+# helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --set controller.ingressClassResource.default=true --set controller.ingressClass.setAsDefaultIngress=true --create-namespace
+# kubectl logs <ingress-controller-pod-name> --follow
+
+{{- if eq .Values.installOptions.ingressIdentifierType "hostname" }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webapi-ingress
+#  annotations:
+#    nginx.ingress.kubernetes.io/use-regex: "true"
+    # Write forward everything after the /webapi prefix to the backend.
+#    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+#  ingressClassName: {{ .Values.ingress.ingressClass }}
+  tls:
+  - hosts:
+      - {{ .Values.ingress.hostname }}
+    secretName: webapi-tls-cert
+  rules:
+  - host: {{ .Values.ingress.hostname }}
+    http:
+      paths:
+      #  Regex for path.  We're looking to pass everything after the /webapi prefix.
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            #  Target backend service.
+            name: k8spoc-webapi
+            #  Target port.  This is our default ASP.NET 8080 port.
+            port:
+              number: 8080
+{{ end }}

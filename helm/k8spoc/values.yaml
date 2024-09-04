@@ -5,3 +5,13 @@ imageRegistryCredentials:
   username: someone
   password: sillyness
   email: someone@host.com
+ingress:
+  hostname: kbastow-2022.demo.local
+  path: /test-webapi
+  ingressClass: nginx
+  tlsCert: 
+    cert: [NOT_SET]
+    key: [NOT_SET]
+installOptions:
+  installWindowsConsole: false
+  ingressIdentifierType: path

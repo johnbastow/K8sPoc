@@ -2,10 +2,14 @@
 # helm repo index k8spoc-charts --url https://johnbastow.github.io/k8spoc-charts
 # helm repo list
 # helm repo update 
-# helm search repo -l
+# helm search repo -l --regexp k8spoc-charts\/k8spoc
+
 
 # Create with new namespace and new credentials
 # helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev --set 'imageRegistryCredentials.username=<client-id>' --set 'imageRegistryCredentials.password=<client-secret>' --create-namespace
+
+# Create with values in test-values.yaml file.
+# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev --values ./test-values.yaml --create-namespace
 
 # Create with existing namespace and new credentials
 # helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev --set 'imageRegistryCredentials.username=<client-id>' --set 'imageRegistryCredentials.password=<client-secret>'
@@ -20,7 +24,7 @@
 
 apiVersion: v2
 name: k8spoc
-version: 0.0.5
+version: 0.0.10
 #kubeVersion: A SemVer range of compatible Kubernetes versions (optional)
 description: POC of K8s implementation
 type: application
