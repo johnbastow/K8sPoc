@@ -14,4 +14,4 @@ ingress:
     key: [NOT_SET]
 installOptions:
   installWindowsConsole: false
-  ingressIdentifierType: path
+  ingressIdentifierType: hostname

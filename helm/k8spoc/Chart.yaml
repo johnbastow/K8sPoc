@@ -6,21 +6,21 @@
 
 
 # Create with new namespace and new credentials
-# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev --set 'imageRegistryCredentials.username=<client-id>' --set 'imageRegistryCredentials.password=<client-secret>' --create-namespace
+# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-one --set 'imageRegistryCredentials.username=<client-id>' --set 'imageRegistryCredentials.password=<client-secret>' --create-namespace
 
 # Create with values in test-values.yaml file.
-# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev --values ./test-values.yaml --create-namespace
+# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-one --values ./test-values.yaml --create-namespace
 
 # Create with existing namespace and new credentials
-# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev --set 'imageRegistryCredentials.username=<client-id>' --set 'imageRegistryCredentials.password=<client-secret>'
+# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-one --set 'imageRegistryCredentials.username=<client-id>' --set 'imageRegistryCredentials.password=<client-secret>'
 
 # Create with existing namespace and existing credentials
-# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-dev
+# helm upgrade --install k8spoc k8spoc-charts/k8spoc --namespace k8spoc-test-one
 
 # helm list --all-namespaces
-# helm list --namespace k8spoc-test-dev
-# helm uninstall k8spoc --namespace k8spoc-test-dev
-# kubectl delete namespace k8spoc-test-dev
+# helm list --namespace k8spoc-test-one
+# helm uninstall k8spoc --namespace k8spoc-test-one
+# kubectl delete namespace k8spoc-test-one
 
 apiVersion: v2
 name: k8spoc

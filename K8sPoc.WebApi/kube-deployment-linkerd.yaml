@@ -1,4 +1,4 @@
-# kubectl apply -f kube-deployment.yaml
+# kubectl apply -f kube-deployment-linkerd.yaml
 # kubectl logs k8spoc-webapi-<podid> --follow
 # 
 # Linkerd Inject

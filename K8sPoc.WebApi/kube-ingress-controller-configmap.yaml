@@ -1,5 +1,6 @@
 # kubectl apply -f kube-ingress-controller-configmap.yaml
 # helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+# helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --set controller.ingressClassResource.default=true --set controller.ingressClass.setAsDefaultIngress=true --create-namespace
 
 kind: ConfigMap
 apiVersion: v1
