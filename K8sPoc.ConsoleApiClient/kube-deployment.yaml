@@ -30,8 +30,11 @@ spec:
       - name: k8spoc-consoleapiclient
         image: acrawdemo.azurecr.io/k8spoc-consoleapiclient:latest
         imagePullPolicy: IfNotPresent
-        env:
-        - name: WEB_API_HOST
-          value: k8spoc-webapi:8080
+        envFrom:
+        - configMapRef:
+            name: k8spoc-config
+            optional: true 
+        - secretRef:
+            name: k8spoc-secrets
       imagePullSecrets:
       - name: aw-acr-demo-secret
