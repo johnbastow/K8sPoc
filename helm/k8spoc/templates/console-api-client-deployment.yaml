@@ -9,8 +9,6 @@ spec:
       app: k8spoc-consoleapiclient
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         app: k8spoc-consoleapiclient
     spec:

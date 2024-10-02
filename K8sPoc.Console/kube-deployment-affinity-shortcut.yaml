@@ -20,13 +20,7 @@ spec:
       # Ensure that this is only deployed to a Linux node.
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os 
-                operator: In
-                values:
-                - linux
+          "kubernetes.io/os": windows
       containers:
       - name: k8spoc-console
         image: acrawdemo.azurecr.io/k8spoc-console:latest
