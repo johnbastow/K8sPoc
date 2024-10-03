@@ -1,6 +1,6 @@
 test-values.yaml
 *.crt
 *.key
-#/test-values
+/test-values
 
 

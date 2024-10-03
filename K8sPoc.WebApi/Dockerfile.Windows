@@ -3,7 +3,6 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022 AS build-env
 WORKDIR /App
-#USER NT Authority\System
 USER ContainerAdministrator
 
 # Copy everything
@@ -18,4 +17,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-ltsc2022
 WORKDIR /App
 USER ContainerUser
 COPY --from=build-env /App/out .
-ENTRYPOINT ["dotnet", "ContainerConsole.dll"]
+ENTRYPOINT ["dotnet", "K8sPoc.WebApi.dll"]

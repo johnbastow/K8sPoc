@@ -28,7 +28,7 @@
 apiVersion: v2
 name: k8spoc
 # The version of the Helm Chart.  May be different than the version of the app it's deploying
-version: 0.0.10
+version: 0.0.11
 description: POC of K8s implementation
 type: application
 keywords:
@@ -44,5 +44,5 @@ maintainers: # (optional)
     # email: The maintainers email (optional for each maintainer)
     url: https://john.thebastows.com/
 # The version of the app. A good purpose for this is to identify the correct image version.
-appVersion: "0.0.1"
+appVersion: "0.0.2"
 deprecated: false

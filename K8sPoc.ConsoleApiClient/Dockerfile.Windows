@@ -3,8 +3,7 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022 AS build-env
 WORKDIR /App
-#USER NT Authority\System
-USER k8spocAdministrator
+USER ContainerAdministrator
 
 # Copy everything
 COPY . ./
@@ -16,6 +15,6 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-ltsc2022
 WORKDIR /App
-USER k8spocUser
+USER ContainerUser
 COPY --from=build-env /App/out .
-ENTRYPOINT ["dotnet", "K8sPoc.Console.dll"]
+ENTRYPOINT ["dotnet", "K8sPoc.ConsoleApiClient.dll"]
