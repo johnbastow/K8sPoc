@@ -25,6 +25,7 @@ spec:
                   - linux
       containers:
       - name: k8spoc-console
+        # Ensure we're pulling the correct image version by appending the chart app version.
         image: acrawdemo.azurecr.io/k8spoc-console-linux:{{ $.Chart.AppVersion }}
         imagePullPolicy: IfNotPresent
         # This will map each ConfigMap and app secrets value to an environment variable.
