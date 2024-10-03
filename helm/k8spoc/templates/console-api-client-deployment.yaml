@@ -1,3 +1,5 @@
+# Loop through the list of OSes to install to and install each one.
+{{- range .Values.installOptions.apiConsoleOsDeployments }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,19 +17,26 @@ spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
+          # This will pull the value from the current range item.
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os 
-                operator: In
-                values:
-                - linux
+              - matchExpressions:
+                - key: kubernetes.io/os 
+                  operator: In
+                  values:
+                  - {{ . }}
       containers:
       - name: k8spoc-consoleapiclient
-        image: acrawdemo.azurecr.io/k8spoc-consoleapiclient:latest
-        imagePullPolicy: Always
+        # Properly format the image name based on the OS, app version and Windows version attributes.
+        {{ if eq . "linux" }}image: acrawdemo.azurecr.io/k8spoc-consoleapiclient-linux:{{ $.Chart.AppVersion }}{{ end }}
+        {{- if eq . "windows" }}image: acrawdemo.azurecr.io/k8spoc-consoleapiclient-win-{{ $.Values.installOptions.windowsVersion }}:{{ $.Chart.AppVersion }}{{ end }}
+        imagePullPolicy: IfNotPresent
+        # This will map each ConfigMap and app secrets value to an environment variable.
         envFrom:
         - configMapRef:
             name: k8spoc-config
             optional: true 
+        - secretRef:
+            name: k8spoc-secrets
       imagePullSecrets:
       - name: acr-docker-secret
+{{- end }}      

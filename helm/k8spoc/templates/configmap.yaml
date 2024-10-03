@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: k8spoc-config
 data:
-  NON_SECRET_SETTING: Hello from the ConfigMap
-  ANOTHER_SETTING: Whatever
-  WEB_API_HOST: k8spoc-webapi:8080
+  NON_SECRET_SETTING: {{ .Values.appConfig.NON_SECRET_SETTING }}
+  ANOTHER_SETTING: {{ .Values.appConfig.ANOTHER_SETTING }}
+  WEB_API_HOST: {{ .Values.appConfig.WEB_API_HOST }}

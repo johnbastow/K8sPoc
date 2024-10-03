@@ -1,17 +1,33 @@
-instance: "k8spoc-default"
-phase: "dev"
+# Image repository settings.
 imageRegistryCredentials:
   registry: acrawdemo.azurecr.io
-  username: someone
-  password: sillyness
-  email: someone@host.com
+  username: [NOT_SET]
+  password: [NOT_SET]
+  email: [NOT_SET]
+#Ingress settings.
 ingress:
-  hostname: kbastow-2022.demo.local
-  path: /test-webapi
-  ingressClass: nginx
+  hostname: [NOT_SET]
   tlsCert: 
     cert: [NOT_SET]
     key: [NOT_SET]
+# Application configuration settings.
+appConfig:
+  NON_SECRET_SETTING: Hello from the ConfigMap
+  ANOTHER_SETTING: Whatever
+  WEB_API_HOST: k8spoc-webapi:8080  
+# Application secrets.
+appSecrets:
+  SECRET_SETTING: [NOT_SET]
+  ANOTHER_SECRET_SETTING: [NOT_SET]
+# Install Options.
 installOptions:
-  installWindowsConsole: false
-  ingressIdentifierType: hostname
+  # The version of Windows we're targeting.
+  windowsVersion: ltsc2022
+  # Indicates whether or not to deploy the console.
+  installConsole: true
+  # Indicates whether we should deploy the Windows version, Linux version, both, or neither.
+  apiConsoleOsDeployments: 
+    - windows
+    - linux
+  # Indicates the OS to target for the API deployment.
+  apiDeploymentOs: linux

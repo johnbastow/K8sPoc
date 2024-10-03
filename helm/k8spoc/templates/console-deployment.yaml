@@ -1,3 +1,4 @@
+{{- if .Values.installOptions.installConsole }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,18 +18,16 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os 
-                operator: In
-                values:
-                - linux
+              - matchExpressions:
+                - key: kubernetes.io/os 
+                  operator: In
+                  values:
+                  - linux
       containers:
       - name: k8spoc-console
-        image: acrawdemo.azurecr.io/k8spoc-console:latest
-        # Always pulls the latest image from the registry even if cached.
-        # Only recommended to be used in POC environment where tag isn't changing.
-        imagePullPolicy: Always
-        # This will map each ConfigMap value to an environment variable.
+        image: acrawdemo.azurecr.io/k8spoc-console-linux:{{ $.Chart.AppVersion }}
+        imagePullPolicy: IfNotPresent
+        # This will map each ConfigMap and app secrets value to an environment variable.
         envFrom:
         - configMapRef:
             name: k8spoc-config
@@ -37,3 +36,4 @@ spec:
             name: k8spoc-secrets
       imagePullSecrets:
         - name: acr-docker-secret
+{{- end }}      

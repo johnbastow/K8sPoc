@@ -15,16 +15,26 @@ spec:
     spec:
       affinity:
         nodeAffinity:
+          # This will pull the OS value from the values.
           requiredDuringSchedulingIgnoredDuringExecution:
+          # This will pull the value from the current range item.
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os 
-                operator: In
-                values:
-                - linux
+              - matchExpressions:
+                - key: kubernetes.io/os 
+                  operator: In
+                  values:
+                  - {{ .Values.installOptions.apiDeploymentOs }}
       containers:
       - name: k8spoc-webapi
-        image: acrawdemo.azurecr.io/k8spoc-webapi:latest
-        imagePullPolicy: Always
+        {{ if eq .Values.installOptions.apiDeploymentOs "linux" }}image: acrawdemo.azurecr.io/k8spoc-webapi-linux:{{ $.Chart.AppVersion }}{{ end }}
+        {{- if eq .Values.installOptions.apiDeploymentOs "windows" }}image: acrawdemo.azurecr.io/k8spoc-webapi-win-{{ $.Values.installOptions.windowsVersion }}:{{ $.Chart.AppVersion }}{{ end }}
+        imagePullPolicy: IfNotPresent
+        # This will map each ConfigMap and app secrets value to an environment variable.
+        envFrom:
+        - configMapRef:
+            name: k8spoc-config
+            optional: true 
+        - secretRef:
+            name: k8spoc-secrets
       imagePullSecrets:
         - name: acr-docker-secret
