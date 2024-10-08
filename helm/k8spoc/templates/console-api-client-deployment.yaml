@@ -3,16 +3,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8spoc-consoleapiclient
+  # Ensure that each instance is using a unique name.
+  name: k8spoc-consoleapiclient-{{ . }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: k8spoc-consoleapiclient
+      app: k8spoc-consoleapiclient-{{ . }}
   template:
     metadata:
       labels:
-        app: k8spoc-consoleapiclient
+        app: k8spoc-consoleapiclient-{{ . }}
     spec:
       affinity:
         nodeAffinity:
@@ -25,7 +26,7 @@ spec:
                   values:
                   - {{ . }}
       containers:
-      - name: k8spoc-consoleapiclient
+      - name: k8spoc-consoleapiclient-{{ . }}
         # Properly format the image name based on the OS, app version and Windows version attributes.
         {{ if eq . "linux" }}image: acrawdemo.azurecr.io/k8spoc-consoleapiclient-linux:{{ $.Chart.AppVersion }}{{ end }}
         {{- if eq . "windows" }}image: acrawdemo.azurecr.io/k8spoc-consoleapiclient-win-{{ $.Values.installOptions.windowsVersion }}:{{ $.Chart.AppVersion }}{{ end }}
@@ -39,4 +40,6 @@ spec:
             name: k8spoc-secrets
       imagePullSecrets:
       - name: acr-docker-secret
+# You need the --- at the end to break each instance into a separate manifest.
+---      
 {{- end }}      
